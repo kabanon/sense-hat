@@ -2,55 +2,58 @@
 #-*- coding: utf-8 -*-
 
 class Monter:
-  X = (255,255,255)
-  O = (0,0,0)
   
-  monsters = {
-    '01' : [
-      X, O, O, X, X, O, O, X,
-      X, O, X, X, X, X, O, X,
-      O, X, O, X, X, O, X, O,
-      O, X, X, X, X, X, X, O,
-      O, X, O, O, O, O, X, O,
-      O, O, X, X, X, X, O, O,
-      X, X, O, X, X, O, X, X,
-      X, O, O, O, O, O, O, X, 
-    ],
-    '02' : [
-      O, X, O, O, O, O, X, O,
-      O, X, O, O, O, O, X, O,
-      O, O, X, O, O, X, O, O,
-      O, O, O, X, X, O, O, O,
-      O, O, X, X, X, X, O, O,
-      O, X, O, X, X, O, X, O,
-      X, X, X, X, X, X, X, X,
-      O, X, X, O, O, X, X, O,
-    ],
-    '03' : [
-      O, O, O, X, X, O, O, O,
-      O, O, X, X, X, X, O, O,
-      O, X, X, X, X, X, X, O,
-      X, X, O, X, X, O, X, X,
-      X, X, X, X, X, X, X, X,
-      O, O, X, X, X, X, O, O,
-      O, X, X, X, X, X, X, O,
-      X, O, X, O, O, X, O, X,
-    ],
-  }
-
-  def __init__(self, sense):
+  def __init__(self, sense, X = (255,255,255), O = (0,0,0)):
     self.monster = None
     self.action  = None
-    self.sense   = sense
+    self.X = X
+    self.O = O
 
-  def load(self, monster_id):
-    #if (self.monsters.has_key(monster_id)):
-    self.monster = self.monsters[monster_id]
+  def set_X(self, X):
+    self.X = X
+
+  def load(self, mid):
+    X = self.X
+    O = self.O
+      
+    monsters = {
+      '01' : [
+        X, O, O, X, X, O, O, X,
+        X, O, X, X, X, X, O, X,
+        O, X, O, X, X, O, X, O,
+        O, X, X, X, X, X, X, O,
+        O, X, O, O, O, O, X, O,
+        O, O, X, X, X, X, O, O,
+        X, X, O, X, X, O, X, X,
+        X, O, O, O, O, O, O, X, 
+      ],
+      '02' : [
+        O, X, O, O, O, O, X, O,
+        O, X, O, O, O, O, X, O,
+        O, O, X, O, O, X, O, O,
+        O, O, O, X, X, O, O, O,
+        O, O, X, X, X, X, O, O,
+        O, X, O, X, X, O, X, O,
+        X, X, X, X, X, X, X, X,
+        O, X, X, O, O, X, X, O,
+      ],
+      '03' : [
+        O, O, O, X, X, O, O, O,
+        O, O, X, X, X, X, O, O,
+        O, X, X, X, X, X, X, O,
+        X, X, O, X, X, O, X, X,
+        X, X, X, X, X, X, X, X,
+        O, O, X, X, X, X, O, O,
+        O, X, X, X, X, X, X, O,
+        X, O, X, O, O, X, O, X,
+      ],
+    }
+    if (mid in monsters):
+      self.monster = monsters[mid]
 
   def display(self):
     if (self.monster is None):
       self.sense.set_pixels(self.monster)
-
 
   def __str__(self):
     if (self.monster is None):
@@ -64,7 +67,6 @@ class Monter:
           else:
             _return += ' '
         _return += "\n"
-
       return _return
 
        
