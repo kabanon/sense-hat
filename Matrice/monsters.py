@@ -8,6 +8,7 @@ class Monter:
     self.action  = None
     self.X = X
     self.O = O
+    self.position = [0,0]
 
   def set_X(self, X):
     self.X = X
@@ -52,8 +53,14 @@ class Monter:
       self.monster = monsters[mid]
 
   def display(self):
-    if (self.monster is None):
-      self.sense.set_pixels(self.monster)
+    # Only return data if monster is defined.
+    if (self.monster is not None):
+      # Take care of monster position in the matrice.
+      _return = list(range(0,64))
+      for i in range(0,64,8):
+        for j in range(0,8):
+          _return[i+j] = self.monster[i+j]
+      return _return
 
   def __str__(self):
     if (self.monster is None):
