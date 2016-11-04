@@ -1,56 +1,31 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
+import json
+import os
+
 class Monter:
   
-  def __init__(self, sense, X = (255,255,255), O = (0,0,0)):
+  def __init__(self):
     self.monster = None
     self.action  = None
-    self.X = X
-    self.O = O
+    self.colors = {
+      0 : (0,0,0),
+      1 : (255,255,255)
+    }
     self.position = [0,0]
 
   def set_X(self, X):
     self.X = X
 
-  def load(self, mid):
-    X = self.X
-    O = self.O
-      
-    monsters = {
-      '01' : [
-        X, O, O, X, X, O, O, X,
-        X, O, X, X, X, X, O, X,
-        O, X, O, X, X, O, X, O,
-        O, X, X, X, X, X, X, O,
-        O, X, O, O, O, O, X, O,
-        O, O, X, X, X, X, O, O,
-        X, X, O, X, X, O, X, X,
-        X, O, O, O, O, O, O, X, 
-      ],
-      '02' : [
-        O, X, O, O, O, O, X, O,
-        O, X, O, O, O, O, X, O,
-        O, O, X, O, O, X, O, O,
-        O, O, O, X, X, O, O, O,
-        O, O, X, X, X, X, O, O,
-        O, X, O, X, X, O, X, O,
-        X, X, X, X, X, X, X, X,
-        O, X, X, O, O, X, X, O,
-      ],
-      '03' : [
-        O, O, O, X, X, O, O, O,
-        O, O, X, X, X, X, O, O,
-        O, X, X, X, X, X, X, O,
-        X, X, O, X, X, O, X, X,
-        X, X, X, X, X, X, X, X,
-        O, O, X, X, X, X, O, O,
-        O, X, X, X, X, X, X, O,
-        X, O, X, O, O, X, O, X,
-      ],
-    }
-    if (mid in monsters):
-      self.monster = monsters[mid]
+  def load(self, mid):      
+    filename = "{}/json_monsters/{}.json".format(os.path.dirname(os.path.abspath(__file__)), mid)
+    try:
+      with open(filename) as json_data:
+        self.monster = json.load(json_data)
+        json_data.close()
+    except IOError: 
+        print("Error: File '{}' does not appear to exist.".format(filename))
 
   def display(self):
     # Only return data if monster is defined.
@@ -59,7 +34,7 @@ class Monter:
       _return = list(range(0,64))
       for i in range(0,64,8):
         for j in range(0,8):
-          _return[i+j] = self.monster[i+j]
+          _return[i+j] = self.colors.get(self.monster[i+j], (0,0,0))
       return _return
 
   def __str__(self):
@@ -69,7 +44,7 @@ class Monter:
       _return = ""
       for i in range(0,64,8):
         for j in range(0,8):
-          if (self.monster[i+j] == self.X):
+          if (self.monster[i+j] == 1):
             _return += 'X'
           else:
             _return += ' '

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
+"""
 import time
 from sense_hat import SenseHat
 from Matrice import monsters
@@ -26,3 +27,13 @@ print(monster)
 time.sleep(2)
 
 sense.clear()
+"""
+
+import time
+from Matrice import monsters
+
+monster = monsters.Monter()
+monster.load('01')
+print(monster.display())
+
+
