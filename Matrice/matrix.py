@@ -35,7 +35,7 @@ class Matrix():
     self.position['x'] += x
     self.position['y'] += y
     if (self.display_after_move):
-      self.sense.set_pixels(self.display(), size = self.size, color = self.colors[0])
+      self.sense.set_pixels(self.display())
       time.sleep(self.sleep)
 
   def move_left(self, x=1):
@@ -89,5 +89,9 @@ class Matrix():
             _return += 'X'
         _return += "\n"
       return _return
+
+  def __del__(self):
+    """ Clear LED Matrix when job is done """
+    self.sense.clear()
 
        
