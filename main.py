@@ -1,39 +1,13 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
-"""
-import time
-from sense_hat import SenseHat
-from Matrice import monsters
-
-sense = SenseHat()
-sense.clear()
-sense.low_light = True
-
-monster = monsters.Monter(sense)
-monster.load('01')
-sense.set_pixels(monster.display())
-print(monster)
-time.sleep(2)
-monster.set_X((255,0,0))
-monster.load('02')
-sense.set_pixels(monster.display())
-print(monster)
-time.sleep(2)
-monster.set_X((0,255,0))
-monster.load('03')
-sense.set_pixels(monster.display())
-print(monster)
-time.sleep(2)
-
-sense.clear()
-"""
-
 import time
 from Matrice import monsters
 
 monster = monsters.Monter()
+
 monster.load('01')
-print(monster.display())
 
-
+for i in range(0, 7):
+  monster.move_left()
+  print(monster)
