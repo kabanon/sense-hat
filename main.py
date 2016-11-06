@@ -10,4 +10,3 @@ monster.load('01')
 
 for i in range(0, 7):
   monster.move_left()
-  print(monster)

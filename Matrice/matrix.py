@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
+import time
+
+try:
+    from sense_hat import SenseHat
+except ImportError:
+    from .sensehat_emulator import SenseHat
+
 class Matrix():
   
   def __init__(self):
@@ -19,11 +26,17 @@ class Matrix():
       'y' : 8,
     }
     self.size['range'] = self.size['x'] * self.size['y']
+    self.sleep = 0.1
+    self.display_after_move = True
+    self.sense = SenseHat()
 
   def move(self, x = 0, y = 0):
     """ Move the matrix on sense-hat display. """
     self.position['x'] += x
     self.position['y'] += y
+    if (self.display_after_move):
+      self.sense.set_pixels(self.display(), size = self.size, color = self.colors[0])
+      time.sleep(self.sleep)
 
   def move_left(self, x=1):
     """ Move the matrix to the left """
@@ -68,9 +81,9 @@ class Matrix():
     else:
       _matrix = self.display()
       _return = ""
-      for i in range(0,64,8):
-        for j in range(0,8):
-          if (_matrix[i+j] == self.colors[0]):
+      for y in range(0, self.size['range'], self.size['y']):
+        for x in range(0, self.size['x']):
+          if (_matrix[y+x] == self.colors[0]):
             _return += ' '
           else:
             _return += 'X'
